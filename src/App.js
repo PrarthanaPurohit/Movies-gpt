@@ -1,9 +1,9 @@
-import logo from './logo.svg';
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className='bg-blue-600 min-h-3'>App
       
     </div>
   );
