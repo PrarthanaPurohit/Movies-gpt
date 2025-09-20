@@ -5,12 +5,18 @@ import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   //for reference
   const email = useRef(null);
   const password = useRef(null);
@@ -53,6 +59,27 @@ const Login = () => {
           .then((userCredential) => {
             // Signed up
             const user = userCredential.user;
+            updateProfile(auth.currentUser, {
+              displayName: name.current.value,
+              photoURL:
+                "https://wallpapers.com/images/high/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.webp",
+            })
+              .then(() => {
+                // Profile updated!
+                const { uid, email, displayName, photoURL } = auth.currentUser;
+                dispatch(
+                  addUser({
+                    uid: uid,
+                    email: email,
+                    displayName: displayName,
+                    photoURL: photoURL,
+                  })
+                );
+                navigate("/browse");
+              })
+              .catch((error) => {
+                setErrorMessage(error.message);
+              });
             console.log(user);
           })
           .catch((error) => {
@@ -71,6 +98,7 @@ const Login = () => {
             // Signed in
             const user = userCredential.user;
             console.log(user);
+            navigate("/browse");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -83,7 +111,13 @@ const Login = () => {
 
   return (
     <div className="relative h-screen w-screen">
-      <Header />
+      <div className="absolute top-0 left-0 w-full px-8 py-4 bg-gradient-to-b to-black z-10">
+        <img
+          className="w-44"
+          src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2025-08-26/consent/87b6a5c0-0104-4e96-a291-092c11350111/0198e689-25fa-7d64-bb49-0f7e75f898d2/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+          alt="logo"
+        ></img>
+      </div>
       <div>
         {/* bg image */}
         <img
