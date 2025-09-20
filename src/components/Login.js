@@ -60,12 +60,13 @@ const Login = () => {
             // Signed up
             const user = userCredential.user;
             updateProfile(auth.currentUser, {
-              displayName: name.current.value,
+              displayName: name.current.value, //name we signed up with
               photoURL:
                 "https://wallpapers.com/images/high/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.webp",
             })
               .then(() => {
                 // Profile updated!
+                //update redux sotre
                 const { uid, email, displayName, photoURL } = auth.currentUser;
                 dispatch(
                   addUser({
