@@ -3,10 +3,32 @@ import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+
+  //authentication
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        //user is signed in
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL:photoURL }));
+        navigate("/browse");
+      } else {
+        //user is signed out
+        dispatch(removeUser());
+        navigate("/");
+       
+      }
+    });
+  }, [dispatch, navigate]);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -20,9 +42,9 @@ const Header = () => {
   };
 
   return (
-    <div className="top-0 left-0 w-full px-8 py-4 
-    bg-gradient-to-b from-gray-900 to-black 
-    z-10 flex items-center justify-between">
+    <div className="fixed top-0 left-0 w-full px-8 py-4 
+    bg-gradient-to-b from-black/20 to-transparent
+    z-50 flex items-center justify-between">
 
       {/* Left: Netflix Logo */}
       <img
