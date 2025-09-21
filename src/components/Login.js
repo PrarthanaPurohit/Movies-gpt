@@ -11,6 +11,7 @@ import { auth } from "../utils/firebase";
 
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG, USER } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -62,7 +63,7 @@ const Login = () => {
             updateProfile(auth.currentUser, {
               displayName: name.current.value, //name we signed up with
               photoURL:
-                "https://wallpapers.com/images/high/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.webp",
+              USER  ,
             })
               .then(() => {
                 // Profile updated!
@@ -116,7 +117,7 @@ const Login = () => {
         {/* bg image */}
         <img
           className="h-screen w-screen object-cover"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/8d617e19-3c3c-4c28-8998-c9b14dbc7200/web/IN-en-20250901-TRIFECTA-perspective_48d84d4e-9558-46b8-a0f3-8b2dc8478431_small.jpg"
+          src={BG}
           alt="bg"
         ></img>
       </div>
