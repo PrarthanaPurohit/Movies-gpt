@@ -15,13 +15,13 @@ const MainContainer = () => {
 
       // Early return if movies not loaded or empty
   if (!movies || movies.length === 0) return null;
-    const mainMovie = movies[1];
+    const mainMovie = movies[0];
     //console.log(mainMovie);
 
     const {original_title, overview, id} = mainMovie;
 
   return (
-    <div className='relative'>
+    <div className=''>
         <VideoTitle title={original_title} overview= {overview}/>
         <VideoBackground movieId = {id} />
     </div>
