@@ -18,10 +18,13 @@ const Browse = () => {
     
 
   return (
-    <div className="">
+    <div className="bg-black">
       <Header />
-      <MainContainer/>
-      <SecondaryContainer/>
+      <div className="">
+        <MainContainer/>
+        <SecondaryContainer/>
+      </div>
+      
     </div>
   );
 };

@@ -45,7 +45,7 @@ const Header = () => {
 
   return (
     <div className="fixed top-0 left-0 w-full px-8 py-4 
-    bg-gradient-to-b from-black/20 to-transparent
+    bg-gradient-to-b from-black/20 to-black
     z-50 flex items-center justify-between">
 
       {/* Left: Netflix Logo */}
