@@ -9,18 +9,19 @@ const MainContainer = () => {
     //fetch data from store
     const movies = useSelector((store) => store.movies?.NowPlayingMovies?.results);
 
+    //check if the store is full
 //     const fullStore = useSelector((store) => store);
 // console.log("FULL STORE:", fullStore);
 
       // Early return if movies not loaded or empty
   if (!movies || movies.length === 0) return null;
-    const mainMovie = movies[0];
+    const mainMovie = movies[1];
     //console.log(mainMovie);
 
     const {original_title, overview, id} = mainMovie;
 
   return (
-    <div>
+    <div className='relative'>
         <VideoTitle title={original_title} overview= {overview}/>
         <VideoBackground movieId = {id} />
     </div>

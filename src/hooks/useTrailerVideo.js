@@ -11,7 +11,7 @@ const useTrailerVideo = (movieId) => {
     
       const dispatch = useDispatch();
     
-      
+      //getting data from api
     
       const getMovieVideo = async () => {
         const data = await fetch("https://api.themoviedb.org/3/movie/"+movieId+"/videos?language=en-US",API_OPTIONS);
@@ -19,12 +19,13 @@ const useTrailerVideo = (movieId) => {
         //console.log(json);
     
         const trailers = json.results.filter((video) => video.type === "Trailer");
-        const trailer = trailers.length ? trailers[0] : json.results[0];
+        const trailer = trailers.length ? trailers[0] : json.results[0]; //either trailer <- type or first video from results object
         //console.log(trailer);
         setTrailerId(trailer.key);
+
+        //updating the store with trailer object
         dispatch(addTrailerVideo(trailer));
         
-    
       
       };
       //called using useEffect
@@ -32,9 +33,7 @@ const useTrailerVideo = (movieId) => {
         getMovieVideo();
     
       }, []);
-  return (
-    <div>useTrailerVideo</div>
-  )
+  return trailerId;
 }
 
 export default useTrailerVideo
