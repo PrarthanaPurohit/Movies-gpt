@@ -9,4 +9,4 @@ const MovieCard = ({posterPath}) => {
   )
 }
 
-export default MovieCard
+export default MovieCard;
