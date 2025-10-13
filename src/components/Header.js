@@ -7,12 +7,15 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toggleGptSearchView } from "../utils/gptSlice";
-
+import {changeLanguage} from "../utils/configSlice";
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+
+  //only show language option when search clicked
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const dispatch = useDispatch();
 
   //authentication
@@ -56,6 +59,11 @@ const Header = () => {
     dispatch(toggleGptSearchView());
   }
 
+  //Language
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  }
+
   return (
     <div
       className="fixed top-0 left-0 w-full px-8 py-4 
@@ -72,7 +80,7 @@ const Header = () => {
         className="bg-yellow-600  text-white font-semibold 
           rounded-lg px-1 py-1 -translate-y-1 transition duration-300 ease-in-out hover:bg-yellow-700"
           onClick={handleGptSearch}>
-          Search
+          {showGptSearch? "Home" : "Search" }
         </button>
 
         <button
@@ -83,9 +91,16 @@ const Header = () => {
           Sign out
         </button>
 
+        {showGptSearch && (
+          <select onChange= {handleLanguageChange} className="bg-purple-400  text-white font-semibold 
+          rounded-lg px-1 py-1 -translate-y-1 transition duration-300 ease-in-out hover:bg-purple-500">
+              {SUPPORTED_LANGUAGES.map(lang => <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
+            </select>)}
+        
+
         {user && (
-  
-          <div className="flex flex-col items-center">
+        <><div className="flex flex-col items-center">
+            
             <img
               src={user.photoURL}
               alt="user icon"
@@ -94,7 +109,8 @@ const Header = () => {
             <span className="text-white text-sm mt-1">
               {user.displayName || "User"}
             </span>
-          </div>
+          </div></>
+          
         )}
 
         
