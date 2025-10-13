@@ -74,7 +74,20 @@ const Header = () => {
       <img className="w-44" src={LOGO} alt="logo" />
 
       {/* Right: Sign out + User profile */}
-      <div className="flex items-center gap-6 ml-auto">
+      
+
+        
+        
+
+        {user && (
+        <>
+        <div className="flex items-center gap-6 ml-auto">
+
+          {showGptSearch && (
+          <select onChange= {handleLanguageChange} className="bg-purple-400  text-white font-semibold 
+          rounded-lg px-1 py-1 -translate-y-1 transition duration-300 ease-in-out hover:bg-purple-500">
+              {SUPPORTED_LANGUAGES.map(lang => <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
+            </select>)}
 
         <button 
         className="bg-yellow-600  text-white font-semibold 
@@ -90,16 +103,10 @@ const Header = () => {
         >
           Sign out
         </button>
-
-        {showGptSearch && (
-          <select onChange= {handleLanguageChange} className="bg-purple-400  text-white font-semibold 
-          rounded-lg px-1 py-1 -translate-y-1 transition duration-300 ease-in-out hover:bg-purple-500">
-              {SUPPORTED_LANGUAGES.map(lang => <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
-            </select>)}
         
-
-        {user && (
-        <><div className="flex flex-col items-center">
+        
+        
+        <div className="flex flex-col items-center">
             
             <img
               src={user.photoURL}
@@ -109,13 +116,16 @@ const Header = () => {
             <span className="text-white text-sm mt-1">
               {user.displayName || "User"}
             </span>
-          </div></>
+          </div>
+          </div>
+          </>
+          
           
         )}
 
         
       </div>
-    </div>
+    
   );
 };
 

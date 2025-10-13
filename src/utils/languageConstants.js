@@ -10,7 +10,11 @@ const lang = {
     french: {
         search: "Recherche",
         searchPlaceholder: "Qu'aimeriez-vous regarder aujourd'hui ?"
-    }
+    },
+    spanish: {
+        search: "Buscar",
+        searchPlaceholder: "¿Qué te gustaría ver hoy?"
+    },
 }
 
 export default lang;
