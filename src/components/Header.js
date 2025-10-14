@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toggleGptSearchView } from "../utils/gptSlice";
-import {changeLanguage} from "../utils/configSlice";
+import { changeLanguage } from "../utils/configSlice";
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
@@ -57,12 +57,12 @@ const Header = () => {
   const handleGptSearch = () => {
     //toggle gpt search
     dispatch(toggleGptSearchView());
-  }
+  };
 
   //Language
   const handleLanguageChange = (e) => {
     dispatch(changeLanguage(e.target.value));
-  }
+  };
 
   return (
     <div
@@ -74,58 +74,54 @@ const Header = () => {
       <img className="w-44" src={LOGO} alt="logo" />
 
       {/* Right: Sign out + User profile */}
-      
 
-        
-        
-
-        {user && (
+      {user && (
         <>
-        <div className="flex items-center gap-6 ml-auto">
+          <div className="flex items-center gap-6 ml-auto">
+            {showGptSearch && (
+              <select
+                onChange={handleLanguageChange}
+                className="bg-purple-400  text-white font-semibold 
+          rounded-lg px-1 py-1 -translate-y-1 transition duration-300 ease-in-out hover:bg-purple-500"
+              >
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <option key={lang.identifier} value={lang.identifier}>
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            )}
 
-          {showGptSearch && (
-          <select onChange= {handleLanguageChange} className="bg-purple-400  text-white font-semibold 
-          rounded-lg px-1 py-1 -translate-y-1 transition duration-300 ease-in-out hover:bg-purple-500">
-              {SUPPORTED_LANGUAGES.map(lang => <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
-            </select>)}
-
-        <button 
-        className="bg-yellow-600  text-white font-semibold 
+            <button
+              className="bg-yellow-600  text-white font-semibold 
           rounded-lg px-1 py-1 -translate-y-1 transition duration-300 ease-in-out hover:bg-yellow-700"
-          onClick={handleGptSearch}>
-          {showGptSearch? "Home" : "Search" }
-        </button>
+              onClick={handleGptSearch}
+            >
+              {showGptSearch ? "Home" : "Search"}
+            </button>
 
-        <button
-          onClick={handleSignOut}
-          className="bg-red-700 hover:bg-red-800 text-white font-semibold 
+            <button
+              onClick={handleSignOut}
+              className="bg-red-700 hover:bg-red-800 text-white font-semibold 
           rounded-lg px-1 py-1 -translate-y-1 transition duration-300 ease-in-out"
-        >
-          Sign out
-        </button>
-        
-        
-        
-        <div className="flex flex-col items-center">
-            
-            <img
-              src={user.photoURL}
-              alt="user icon"
-              className="w-12 h-12 rounded-full object-cover border-2 border-gray-700"
-            />
-            <span className="text-white text-sm mt-1">
-              {user.displayName || "User"}
-            </span>
-          </div>
-          </div>
-          </>
-          
-          
-        )}
+            >
+              Sign out
+            </button>
 
-        
-      </div>
-    
+            <div className="flex flex-col items-center">
+              <img
+                src={user.photoURL}
+                alt="user icon"
+                className="w-12 h-12 rounded-full object-cover border-2 border-gray-700"
+              />
+              <span className="text-white text-sm mt-1">
+                {user.displayName || "User"}
+              </span>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

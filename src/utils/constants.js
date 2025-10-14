@@ -18,3 +18,8 @@ export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
 
 
 export const SUPPORTED_LANGUAGES = [{identifier:"en", name:"English"}, {identifier:"hindi", name:"Hindi"}, {identifier:"french", name:"French"}, {identifier:"spanish", name:"Spanish"}]
+
+// OpenAI key should come from environment variables.
+// For Create React App use `REACT_APP_OPENAI_KEY`. Do NOT commit real keys.
+export const OPENAI_KEY = process.env.REACT_APP_OPENAI_KEY || process.env.OPENAI_API_KEY || '';
+
