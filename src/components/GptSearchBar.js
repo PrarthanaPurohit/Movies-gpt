@@ -1,12 +1,23 @@
 import React, { useRef } from "react";
 import lang from "../utils/languageConstants";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import openai from "../utils/openai";
+import { API_OPTIONS } from "../utils/constants";
+import { addGptMovieResults } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
-
+  const dispatch = useDispatch();
   const langKey = useSelector((store) => store.config.lang)
   const searchText = useRef(null);
+
+  //search movie in tmdb 
+  const searchMovieTMDB = async (movie) => { 
+    const data = await fetch('https://api.themoviedb.org/3/search/movie?query=' +
+       movie 
+       + '&include_adult=false&language=en-US&page=1', API_OPTIONS); 
+    const json = await data.json(); 
+    return json.results; 
+  }
 
   const handleGptSearchClick = async () => {
 
@@ -16,7 +27,7 @@ const GptSearchBar = () => {
     const gptQuery =
       "Act as a movie or series recommendation system and suggest some for the query " +
       searchText.current.value +
-      ". Only give me names of 5 movies like the example result given ahead. Example Result: Frozen, Kantara, Jab We Met, Twilight Saga, Tangled.";
+      ". Only give me names of 5 movies like the example result given ahead. Return ONLY comma-separated movie names. No numbering. No bullet list. No extra text. Example Result: Frozen, Kantara, Jab We Met, Twilight Saga, Tangled.";
 
     // Use chat.completions.create because we are sending `messages` for chat models.
     const gptResults = await openai.chat.completions.create({
@@ -26,8 +37,23 @@ const GptSearchBar = () => {
     });
 
     // The response typically contains the assistant message at choices[0].message.content
-    const assistantReply = gptResults?.choices?.[0]?.message?.content;
-    console.log({ assistantReply, raw: gptResults });
+   
+    let raw = gptResults?.choices?.[0]?.message?.content || "";
+
+// Convert to clean array
+const assistantReply = raw
+  .replace(/\n/g, ",")          // new lines → comma
+  .replace(/[0-9]+\./g, "")     // remove numbering like "1."
+  .split(",")                   // split by comma
+  .map(m => m.trim())           // trim
+  .map(m => m.replace(/\.$/, "")) // remove trailing period
+  .filter(m => m.length > 0);   // remove empty
+
+
+    const promiseArray = assistantReply.map( movie => searchMovieTMDB(movie)); 
+    const tmdbResults = await Promise.all(promiseArray); 
+    console.log(tmdbResults); 
+    dispatch(addGptMovieResults({movieNames: assistantReply, movieResults: tmdbResults}));
   };
   return (
     <div className="pt-24  flex justify-center">
