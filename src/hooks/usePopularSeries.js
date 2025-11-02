@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { API_OPTIONS } from "../utils/constants";
 import { addPopularSeries } from "../utils/movieSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const usePopularSeries = () => {
     //FETCH DATA FROM API AND UPDATE STORE
     const dispatch = useDispatch();
+
+    const popularSeries = useSelector( store => store.movies.popularSeries);
+
       const getPopularSeries = async () => {
         const data = await fetch(
           "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
@@ -17,7 +20,7 @@ const usePopularSeries = () => {
       };
     
       useEffect(() => {
-        getPopularSeries();
+        !popularSeries && getPopularSeries();
       }, []);
     
 

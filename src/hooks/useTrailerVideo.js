@@ -8,8 +8,12 @@ import { addTrailerVideo } from "../utils/movieSlice";
 const useTrailerVideo = (movieId) => {
 
     const [trailerId, setTrailerId] = useState(null);
+
+
     
       const dispatch = useDispatch();
+
+      const trailerVideo = useSelector( store => store.movies.trailerVideo);
     
       //getting data from api
     
@@ -30,7 +34,7 @@ const useTrailerVideo = (movieId) => {
       };
       //called using useEffect
       useEffect(() => {
-        getMovieVideo();
+        !trailerVideo && getMovieVideo();
     
       }, []);
   return trailerId;
