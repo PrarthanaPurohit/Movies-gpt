@@ -65,10 +65,11 @@ const Header = () => {
   };
 
   return (
+    <>
     <div
-      className="fixed top-0 left-0 w-full px-8 py-4 
+      className="hidden md:flex fixed top-0 left-0 w-full px-8 py-4 
     bg-gradient-to-b from-black/20 to-black
-    z-50 flex items-center justify-between"
+    z-50 items-center justify-between"
     >
       {/* Left: Netflix Logo */}
       <img className="w-44" src={LOGO} alt="logo" />
@@ -122,6 +123,56 @@ const Header = () => {
         </>
       )}
     </div>
+
+    {/* ✅ Mobile Header */}
+<div className="flex md:hidden fixed top-0 left-0 w-full px-4 py-3 
+  bg-gradient-to-b from-black/50 to-black z-50 items-center justify-between"
+>
+  <img className="w-28" src={LOGO} alt="logo" />
+
+  {user && (
+    <div className="flex items-center gap-3">
+
+      {/* GPT Button */}
+      <button
+        className="bg-yellow-600 text-white text-xs rounded px-2 py-1"
+        onClick={handleGptSearch}
+      >
+        {showGptSearch ? "Home" : "Search"}
+      </button>
+
+      {/* Language dropdown */}
+      {showGptSearch && (
+        <select
+          onChange={handleLanguageChange}
+          className="bg-purple-400 text-white text-xs rounded px-1 py-1"
+        >
+          {SUPPORTED_LANGUAGES.map((lang) => (
+            <option key={lang.identifier} value={lang.identifier}>
+              {lang.name}
+            </option>
+          ))}
+        </select>
+      )}
+
+      {/* ✅ SIGN OUT BUTTON - MOBILE */}
+      <button
+        onClick={handleSignOut}
+        className="bg-red-700 text-white text-xs rounded px-2 py-1"
+      >
+        Logout
+      </button>
+
+      {/* Profile icon */}
+      <img
+        src={user.photoURL}
+        alt="user icon"
+        className="w-8 h-8 rounded-full border border-gray-500"
+      />
+    </div>
+  )}
+</div>
+</> 
   );
 };
 
