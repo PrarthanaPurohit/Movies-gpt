@@ -3,10 +3,13 @@ import MovieCard from "./MovieCard";
 
 const SearchMovieList = ({ results }) => {
   if (!results) return null;
+  
 
   return (
     <>
-      {results.map((movie) => (
+      {results
+      .filter(movie => movie.poster_path) // only keep movies with poster
+      .map((movie) => (
         <div key={movie.id} className="flex-shrink-0 w-36">
           <img
             className="rounded-lg hover:scale-110 duration-300 shadow-lg"

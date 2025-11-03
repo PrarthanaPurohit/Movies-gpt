@@ -8,7 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
-import { toggleGptSearchView } from "../utils/gptSlice";
+import { toggleGptSearchView, clearGptMovieResults } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
 const Header = () => {
   const navigate = useNavigate();
@@ -55,7 +55,12 @@ const Header = () => {
 
   //search
   const handleGptSearch = () => {
-    //toggle gpt search
+    // If currently in GPT search view, clearing results when going back home
+    if (showGptSearch) {
+      // clear previous GPT results so home shows fresh data
+      dispatch(clearGptMovieResults());
+    }
+    // toggle gpt search view
     dispatch(toggleGptSearchView());
   };
 
