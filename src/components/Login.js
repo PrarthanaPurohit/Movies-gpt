@@ -111,69 +111,76 @@ const Login = () => {
   };
 
   return (
-    <div className="relative h-screen w-screen">
-      
-      <div>
-        {/* bg image */}
-        <img
-          className="h-screen w-screen object-cover"
-          src={BG}
-          alt="bg"
-        ></img>
-      </div>
+  <div className="relative h-screen w-screen">
+    
+    {/* Background */}
+    <img
+      className="absolute inset-0 h-full w-full object-cover"
+      src={BG}
+      alt="bg"
+    />
+    <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
-      {/* Overlay for dimming background */}
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-      <Header />
+    <Header />
 
-      {/* login form */}
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-3/12 p-12 bg-black bg-opacity-80 rounded-lg text-white"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </h2>
+    {/* ✅ DESKTOP LOGIN UI */}
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+      w-3/12 p-12 bg-black/80 rounded-lg text-white"
+    >
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        {isSignInForm ? "Sign In" : "Sign Up"}
+      </h2>
 
-        {!isSignInForm && (
-          <input
-            ref={name}
-            className="p-3 m-2 w-full rounded bg-gray-800 focus:outline-none"
-            type="text"
-            placeholder="Full Name"
-          ></input>
-        )}
+      {!isSignInForm && (
+        <input ref={name} className="p-3 m-2 w-full bg-gray-800 rounded" placeholder="Full Name"/>
+      )}
 
-        <input
-          ref={email}
-          className="p-3 m-2 w-full rounded bg-gray-800 focus:outline-none"
-          type="text"
-          placeholder="Email"
-        ></input>
+      <input ref={email} className="p-3 m-2 w-full bg-gray-800 rounded" placeholder="Email"/>
+      <input ref={password} type="password" className="p-3 m-2 w-full bg-gray-800 rounded" placeholder="Password"/>
 
-        <input
-          ref={password}
-          className="p-3 m-2 w-full rounded bg-gray-800 focus:outline-none"
-          type="password"
-          placeholder="Password"
-        ></input>
+      <p className="text-red-500 p-2">{errorMessage}</p>
 
-        <p className="text-red-600 font-bold m-2 p-2">{errorMessage}</p>
-        <button
-          className=" p-3 m-2 w-full bg-red-600 rounded hover:bg-red-700 transition"
-          onClick={handleButtonClick}
-        >
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </button>
+      <button className="p-3 m-2 w-full bg-red-600 rounded" onClick={handleButtonClick}>
+        {isSignInForm ? "Sign In" : "Sign Up"}
+      </button>
 
-        <p className=" cursor-pointer m-2 p-3" onClick={toggleSignInForm}>
-          {isSignInForm
-            ? "New to Netflix? Sign-Up now!"
-            : "Already a user! Sign-In now"}
-        </p>
-      </form>
-    </div>
-  );
+      <p className="p-3 cursor-pointer" onClick={toggleSignInForm}>
+        {isSignInForm ? "New to Netflix? Sign-Up now!" : "Already a user? Sign-In"}
+      </p>
+    </form>
+
+    {/* 📱 ✅ MOBILE LOGIN UI */}
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className="md:hidden absolute top-1/3 left-1/2 -translate-x-1/2 w-[90%] p-6 
+      bg-black/80 rounded-lg text-white"
+    >
+      <h2 className="text-xl font-bold mb-4 text-center">
+        {isSignInForm ? "Sign In" : "Sign Up"}
+      </h2>
+
+      {!isSignInForm && (
+        <input ref={name} className="p-2 mb-2 w-full bg-gray-800 rounded text-sm" placeholder="Full Name"/>
+      )}
+
+      <input ref={email} className="p-2 mb-2 w-full bg-gray-800 rounded text-sm" placeholder="Email"/>
+      <input ref={password} type="password" className="p-2 mb-2 w-full bg-gray-800 rounded text-sm" placeholder="Password"/>
+
+      <p className="text-red-500 text-sm mb-1">{errorMessage}</p>
+
+      <button className="p-2 w-full bg-red-600 rounded text-sm" onClick={handleButtonClick}>
+        {isSignInForm ? "Sign In" : "Sign Up"}
+      </button>
+
+      <p className="text-center text-xs mt-2 cursor-pointer" onClick={toggleSignInForm}>
+        {isSignInForm ? "New to Netflix? Sign-Up now!" : "Already a user? Sign-In"}
+      </p>
+    </form>
+  </div>
+);
+
 };
 
 export default Login;

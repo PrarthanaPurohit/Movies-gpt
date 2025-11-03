@@ -56,27 +56,55 @@ const assistantReply = raw
     dispatch(addGptMovieResults({movieNames: assistantReply, movieResults: tmdbResults}));
   };
   return (
-    <div className="pt-24  flex justify-center">
-      <form
-      onSubmit={(e) => e.preventDefault()}
-       className="bg-black/60 backdrop-blur-md rounded-2xl shadow-xl grid grid-cols-12 p-3 ">
-        <input
-          ref={searchText}
-          className="col-span-10 m-2 p-3 rounded-lg bg-gray-900 text-white placeholder-gray-500 
-          focus:outline-none focus:ring-2 focus:ring-red-700 transition-all duration-300"
-          type="text"
-          placeholder= {lang[langKey].searchPlaceholder}
-        />
-        <button
-          type="submit"
-          onClick = {handleGptSearchClick}
-          className="col-span-2 m-2 bg-red-700 hover:bg-red-800 text-white font-semibold 
-          rounded-lg px-4 py-3 transition-all duration-300 ease-in-out shadow-md hover:shadow-red-700/40"
+    <>
+      {/* ✅ DESKTOP UI */}
+      <div className="hidden sm:flex pt-24 justify-center">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="bg-black/60 backdrop-blur-md rounded-2xl shadow-xl grid grid-cols-12 p-3"
         >
-          {lang[langKey].search}
-        </button>
-      </form>
-    </div>
+          <input
+            ref={searchText}
+            className="col-span-10 m-2 p-3 rounded-lg bg-gray-900 text-white placeholder-gray-500
+            focus:outline-none focus:ring-2 focus:ring-red-700 transition-all duration-300"
+            type="text"
+            placeholder={lang[langKey].searchPlaceholder}
+          />
+          <button
+            type="submit"
+            onClick={handleGptSearchClick}
+            className="col-span-2 m-2 bg-red-700 hover:bg-red-800 text-white font-semibold 
+            rounded-lg px-4 py-3 transition-all duration-300 ease-in-out shadow-md hover:shadow-red-700/40"
+          >
+            {lang[langKey].search}
+          </button>
+        </form>
+      </div>
+
+      {/* ✅ MOBILE UI */}
+      <div className="sm:hidden pt-20 flex justify-center px-4">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="bg-black/60 backdrop-blur-md rounded-xl shadow-lg p-3 flex gap-2 w-full"
+        >
+          <input
+            ref={searchText}
+            className="flex-1 p-2 rounded-md bg-gray-900 text-white placeholder-gray-500
+            focus:outline-none focus:ring-2 focus:ring-red-700 text-sm"
+            type="text"
+            placeholder={lang[langKey].searchPlaceholder}
+          />
+          <button
+            type="submit"
+            onClick={handleGptSearchClick}
+            className="bg-red-700 hover:bg-red-800 text-white font-semibold 
+            rounded-md px-4 py-2 text-sm transition-all duration-300 shadow-md hover:shadow-red-700/40"
+          >
+            {lang[langKey].search}
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
