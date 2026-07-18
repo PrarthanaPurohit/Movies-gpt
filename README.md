@@ -5,7 +5,7 @@ A Netflix-like React application that provides a seamless movie-browsing and str
 The application includes Firebase Email Authentication, Redux Toolkit for global state management, and React Router DOM for smooth navigation between different sections of the platform. With its modular structure, clean UI, and powerful features, Movies GPT is fast, scalable, and easy to extend.
 ## Demo URL
 
-URL: https://github.com/user-attachments/assets/9be32778-045a-45c5-9dd8-b1102af242ef
+https://github.com/user-attachments/assets/9be32778-045a-45c5-9dd8-b1102af242ef
 
 ## Features
 
