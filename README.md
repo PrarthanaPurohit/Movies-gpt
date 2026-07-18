@@ -3,7 +3,7 @@
 A Netflix-like React application that provides a seamless movie-browsing and streaming-style experience. It integrates TMDB APIs to fetch real-time data such as trending movies, top-rated shows, upcoming releases, and personalized recommendations. The app also features an AI-powered movie suggestion system, where users can enter a query, and OpenAI suggests 5 tailored movies. These suggestions are then individually searched on TMDB to display rich results for each recommended title.
 
 The application includes Firebase Email Authentication, Redux Toolkit for global state management, and React Router DOM for smooth navigation between different sections of the platform. With its modular structure, clean UI, and powerful features, Movies GPT is fast, scalable, and easy to extend.
-## Demo URL
+## Demo 
 
 https://github.com/user-attachments/assets/9be32778-045a-45c5-9dd8-b1102af242ef
 
